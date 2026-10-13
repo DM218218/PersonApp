@@ -35,8 +35,19 @@ namespace PersonApp
                         throw new FormatException($"{input} is not of valid format.");
                     }
 
-                    var person = new Person(cmdArgs[0], cmdArgs[1], int.Parse(cmdArgs[2])); 
-                    persons.Add(person);
+                    try
+                    {
+                        var person = new Person(cmdArgs[0], cmdArgs[1], int.Parse(cmdArgs[2]));
+                        persons.Add(person);
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        Console.WriteLine($"An error has occured: {ex.Message}");
+                    }
+                    catch (Exception ex)
+                    {
+                        throw;
+                    }
                 }
             }
             catch (ArgumentNullException ex)
