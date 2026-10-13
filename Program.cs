@@ -6,8 +6,16 @@ namespace PersonApp
 {
     internal class Program
     {
+        public static int Exercise { get; set; }
+
         static void Main(string[] args)
         {
+            if(args.Length == 1 && args[0] == "-skip1")
+            {
+                goto Skip1;
+            }
+
+            Program.Exercise = 1;
             var lines = 5;
             var persons = new List<Person>();
 
@@ -19,13 +27,23 @@ namespace PersonApp
             {
                 for (int i = 0; i < lines; i++)
                 {
-                    var input = Console.ReadLine() ?? throw new NullReferenceException($"Input was null on line {i}");
+                    var input = Console.ReadLine() ?? throw new ArgumentNullException($"Input was null for person {i}");
                     var cmdArgs = input.Split();
+
+                    if (cmdArgs.Length != 3)
+                    {
+                        throw new FormatException($"{input} is not of valid format.");
+                    }
+
                     var person = new Person(cmdArgs[0], cmdArgs[1], int.Parse(cmdArgs[2])); 
                     persons.Add(person);
                 }
             }
-            catch (NullReferenceException ex)
+            catch (ArgumentNullException ex)
+            {
+                Console.WriteLine($"An error has occured: {ex.Message}");
+            }
+            catch (FormatException ex)
             {
                 Console.WriteLine($"An error has occured: {ex.Message}");
             }
@@ -34,6 +52,25 @@ namespace PersonApp
             .ThenBy(p => p.Age)
             .ToList()
             .ForEach(p => Console.WriteLine(p.ToString()));
+
+            Console.WriteLine("Press any key to continue.");
+            Console.ReadKey();
+
+        Skip1:
+            Program.Exercise = 2;
+
+            try 
+            { 
+                StartUp.RunBonusProcedure();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Console.WriteLine($"An error has occured: {ex.Message}");
+            }
+            catch (FormatException ex)
+            {
+                Console.WriteLine($"An error has occured: {ex.Message}");
+            }
         }
     }
 }
