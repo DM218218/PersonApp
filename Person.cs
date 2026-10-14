@@ -18,7 +18,7 @@ namespace PersonApp
                 return firstName;
             }
 
-            set
+            private set
             { 
                 if(value.Length < 3)
                 {
@@ -35,7 +35,7 @@ namespace PersonApp
                 return lastName;
             }
 
-            set
+            private set
             {
                 if (value.Length < 3)
                 {
@@ -52,7 +52,7 @@ namespace PersonApp
                 return age;
             }
 
-            set
+            private set
             {
                 if (value <= 0)
                 {
@@ -69,7 +69,7 @@ namespace PersonApp
                 return salary;
             }
 
-            set
+            private set
             {
                 if (value < 460)
                 {
